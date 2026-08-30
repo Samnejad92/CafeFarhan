@@ -1,0 +1,756 @@
+﻿@model int
+
+@{
+    int tableNumber = Model;
+}
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        کافه فرهان - میز @tableNumber
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                #eee8df;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px;
+
+        }
+
+
+        /* =========================================
+           POSTER
+        ========================================= */
+
+        .qr-poster {
+
+            position: relative;
+
+            width: 430px;
+
+            min-height: 720px;
+
+            background:
+                #f9f4eb;
+
+            border-radius: 28px;
+
+            padding:
+                35px 30px 28px;
+
+            text-align: center;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px
+                rgba(50, 35, 20, .20);
+
+            border:
+                1px solid
+                #d8c4a8;
+
+        }
+
+
+        /* Decorative border */
+
+        .qr-poster::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 14px;
+
+            border:
+                1px solid
+                #c99c5a;
+
+            border-radius: 20px;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .brand {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .brand-icon {
+
+            font-size: 42px;
+
+            line-height: 1;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 29px;
+
+            font-weight: 900;
+
+            color:
+                #3a2619;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .brand-en {
+
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            color:
+                #a87b43;
+
+            direction: ltr;
+
+        }
+
+
+        .divider {
+
+            width: 80px;
+
+            height: 2px;
+
+            margin: 17px auto;
+
+            background:
+                #b8884c;
+
+        }
+
+
+        /* =========================================
+           TABLE
+        ========================================= */
+
+        .table-label {
+
+            color:
+                #71553c;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+        .table-number {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin: 10px auto 18px;
+
+            border-radius: 50%;
+
+            background:
+                #3a2619;
+
+            color:
+                #fff;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 34px;
+
+            font-weight: 900;
+
+            border:
+                4px solid
+                #c69756;
+
+            box-shadow:
+                0 6px 18px
+                rgba(58, 38, 25, .20);
+
+        }
+
+
+        /* =========================================
+           QR
+        ========================================= */
+
+        .qr-wrapper {
+
+            position: relative;
+
+            width: 275px;
+
+            height: 275px;
+
+            padding: 14px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            border-radius: 18px;
+
+            border:
+                2px solid
+                #b98b52;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,.10);
+
+        }
+
+
+        .qr-wrapper img {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: contain;
+
+        }
+
+
+        /* =========================================
+           SCAN TITLE
+        ========================================= */
+
+        .scan-title {
+
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding:
+                11px 30px;
+
+            background:
+                #3a2619;
+
+            color:
+                #fff;
+
+            border-radius: 30px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 5px 15px
+                rgba(58,38,25,.18);
+
+        }
+
+
+        /* =========================================
+           INSTRUCTION
+        ========================================= */
+
+        .instructions {
+
+            margin-top: 23px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+        }
+
+
+        .instruction {
+
+            padding: 5px;
+
+        }
+
+
+        .instruction-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            margin: 0 auto 8px;
+
+            border-radius: 50%;
+
+            background:
+                #ead9c0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+        }
+
+
+        .instruction-number {
+
+            font-size: 10px;
+
+            color:
+                #ad8149;
+
+            font-weight: bold;
+
+        }
+
+
+        .instruction-text {
+
+            margin-top: 4px;
+
+            font-size: 10px;
+
+            line-height: 1.7;
+
+            color:
+                #513b2a;
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer {
+
+            position: relative;
+
+            margin-top: 25px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px dashed
+                #c5a77f;
+
+            color:
+                #765638;
+
+            font-size: 11px;
+
+            line-height: 1.8;
+
+        }
+
+
+        .footer strong {
+
+            color:
+                #3a2619;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================================
+           PRINT
+        ========================================= */
+
+        .print-button {
+
+            position: fixed;
+
+            bottom: 25px;
+
+            left: 25px;
+
+            border: none;
+
+            background:
+                #3a2619;
+
+            color: white;
+
+            padding:
+                13px 22px;
+
+            border-radius: 30px;
+
+            font-family:
+                Tahoma,
+                Arial;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.2);
+
+        }
+
+
+        @@media print {
+
+            @@page {
+
+                size: A5 portrait;
+
+                margin: 0;
+
+            }
+
+
+            body {
+
+                min-height: auto;
+
+                padding: 0;
+
+                background: white;
+
+            }
+
+
+            .qr-poster {
+
+                width: 148mm;
+
+                height: 210mm;
+
+                min-height: 210mm;
+
+                border-radius: 0;
+
+                box-shadow: none;
+
+                border: none;
+
+            }
+
+
+            .print-button {
+
+                display: none;
+
+            }
+
+        }
+
+
+        @@media(max-width:500px) {
+
+            body {
+
+                padding: 10px;
+
+            }
+
+
+            .qr-poster {
+
+                width: 100%;
+
+                min-height: auto;
+
+            }
+
+
+            .qr-wrapper {
+
+                width: 240px;
+
+                height: 240px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="qr-poster">
+
+
+        <!-- =====================================
+             BRAND
+        ====================================== -->
+
+        <header class="brand">
+
+            <div class="brand-icon">
+                ☕
+            </div>
+
+
+            <div class="brand-name">
+
+                کافه فرهان
+
+            </div>
+
+
+            <div class="brand-en">
+
+                CAFE FARHAN
+
+            </div>
+
+
+            <div class="divider"></div>
+
+        </header>
+
+
+
+        <!-- =====================================
+             TABLE
+        ====================================== -->
+
+        <div class="table-label">
+
+            میز
+
+        </div>
+
+
+        <div class="table-number">
+
+            @tableNumber
+
+        </div>
+
+
+
+        <!-- =====================================
+             QR
+        ====================================== -->
+
+        <div class="qr-wrapper">
+
+            <img
+                src="/Qr/Image/@tableNumber"
+                alt="QR Code میز @tableNumber" />
+
+        </div>
+
+
+
+        <!-- =====================================
+             SCAN
+        ====================================== -->
+
+        <div class="scan-title">
+
+            📱 لطفاً اسکن کنید
+
+        </div>
+
+
+
+        <!-- =====================================
+             INSTRUCTIONS
+        ====================================== -->
+
+        <section class="instructions">
+
+
+            <div class="instruction">
+
+                <div class="instruction-icon">
+
+                    📱
+
+                </div>
+
+
+                <div class="instruction-number">
+
+                    ۱
+
+                </div>
+
+
+                <div class="instruction-text">
+
+                    دوربین موبایل خود را
+                    روی QR بگیرید
+
+                </div>
+
+            </div>
+
+
+
+            <div class="instruction">
+
+                <div class="instruction-icon">
+
+                    📖
+
+                </div>
+
+
+                <div class="instruction-number">
+
+                    ۲
+
+                </div>
+
+
+                <div class="instruction-text">
+
+                    منوی دیجیتال را
+                    مشاهده کنید
+
+                </div>
+
+            </div>
+
+
+
+            <div class="instruction">
+
+                <div class="instruction-icon">
+
+                    🛒
+
+                </div>
+
+
+                <div class="instruction-number">
+
+                    ۳
+
+                </div>
+
+
+                <div class="instruction-text">
+
+                    سفارش خود را
+                    ثبت کنید
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer class="footer">
+
+            <strong>
+                ☕ کافه فرهان
+            </strong>
+
+            <br />
+
+            سفارش شما مستقیماً برای
+            کافه ارسال می‌شود.
+
+            <br />
+
+            با تشکر از انتخاب شما ❤️
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- PRINT -->
+
+    <button
+        class="print-button"
+        onclick="window.print()">
+
+        🖨 چاپ QR
+
+    </button>
+
+
+</body>
+
+</html>

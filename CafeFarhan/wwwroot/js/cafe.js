@@ -105,81 +105,138 @@ function closeCart() {
 }
 
 
-function checkout() {
+// function checkout() {
 
-    if (cart.length === 0) {
+//     if (cart.length === 0) {
 
-        alert("سبد خرید خالی است");
+//         alert("سبد خرید خالی است");
+
+//         return;
+//     }
+
+//     const table =
+//         new URLSearchParams(
+//             window.location.search
+//         ).get("table");
+
+//     if (!table) {
+
+//         alert("شماره میز مشخص نیست");
+
+//         return;
+//     }
+
+
+//     fetch("/Order/Create", {
+
+//         method: "POST",
+
+//         headers: {
+//             "Content-Type":
+//                 "application/json"
+//         },
+
+//         body: JSON.stringify({
+
+//             tableNumber: parseInt(table),
+
+//             items: cart.map(x => ({
+
+//                 productId: x.id,
+
+//                 quantity: x.quantity
+
+//             }))
+
+//         })
+
+//     })
+//         .then(response => {
+
+//             if (!response.ok)
+//                 throw new Error();
+
+//             return response.json();
+
+//         })
+//         .then(data => {
+
+//             alert(
+//                 "سفارش شما با موفقیت ثبت شد.\n" +
+//                 "شماره سفارش: " +
+//                 data.orderId
+//             );
+
+//             cart = [];
+
+//             updateCart();
+
+//             closeCart();
+
+//         })
+//         .catch(() => {
+
+//             alert(
+//                 "ثبت سفارش با خطا مواجه شد."
+//             );
+
+//         });
+
+// }
+
+async function submitOrder() {
+    if (!selectedTable ||
+        selectedTable <= 0) {
+        alert(
+            "لطفاً ابتدا شماره میز را انتخاب کنید."
+        );
 
         return;
     }
 
-    const table =
-        new URLSearchParams(
-            window.location.search
-        ).get("table");
 
-    if (!table) {
+    const orderItems =
+        cart.map(item => ({
+            productId: item.id,
+            quantity: item.quantity
+        }));
 
-        alert("شماره میز مشخص نیست");
 
-        return;
+    const response =
+        await fetch(
+            "/Order/Create",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    tableNumber:
+                        selectedTable,
+
+                    items:
+                        orderItems
+
+                })
+            }
+        );
+
+
+    const result =
+        await response.json();
+
+
+    if (result.success) {
+        alert(
+            `سفارش شما با شماره #${result.orderId} ثبت شد.`
+        );
+
+        cart = [];
+
+        renderCart();
     }
-
-
-    fetch("/Order/Create", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type":
-                "application/json"
-        },
-
-        body: JSON.stringify({
-
-            tableNumber: parseInt(table),
-
-            items: cart.map(x => ({
-
-                productId: x.id,
-
-                quantity: x.quantity
-
-            }))
-
-        })
-
-    })
-        .then(response => {
-
-            if (!response.ok)
-                throw new Error();
-
-            return response.json();
-
-        })
-        .then(data => {
-
-            alert(
-                "سفارش شما با موفقیت ثبت شد.\n" +
-                "شماره سفارش: " +
-                data.orderId
-            );
-
-            cart = [];
-
-            updateCart();
-
-            closeCart();
-
-        })
-        .catch(() => {
-
-            alert(
-                "ثبت سفارش با خطا مواجه شد."
-            );
-
-        });
-
 }

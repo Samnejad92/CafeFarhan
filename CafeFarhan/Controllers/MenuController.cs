@@ -13,6 +13,8 @@ namespace CafeFarhan.Controllers
             _context = context;
         }
 
+
+        [HttpGet]
         public async Task<IActionResult> Index(int? table)
         {
             var categories = await _context.Categories
@@ -20,7 +22,23 @@ namespace CafeFarhan.Controllers
                 .OrderBy(x => x.DisplayOrder)
                 .ToListAsync();
 
-            ViewBag.TableNumber = table ?? 0;
+
+            // اگر از QR آمده باشد
+            if (table.HasValue && table.Value > 0)
+            {
+                ViewBag.TableNumber =
+                    table.Value;
+
+                ViewBag.IsDirectOrder = false;
+            }
+            else
+            {
+                // ورود مستقیم
+                ViewBag.TableNumber = 0;
+
+                ViewBag.IsDirectOrder = true;
+            }
+
 
             return View(categories);
         }

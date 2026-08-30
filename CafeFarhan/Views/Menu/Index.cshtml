@@ -169,6 +169,77 @@
 
 </div>
 
+@if (ViewBag.IsDirectOrder == true)
+{
+    <div class="direct-order-box">
+
+        <div class="direct-order-icon">
+            ☕
+        </div>
+
+        <div class="direct-order-content">
+
+            <h3>
+                ثبت سفارش مستقیم
+            </h3>
+
+            <p>
+                لطفاً شماره میز را انتخاب کنید
+                تا سفارش برای میز مربوطه ثبت شود.
+            </p>
+
+            <div class="table-selection">
+
+                <button type="button"
+                        onclick="selectTable(1)">
+                    میز ۱
+                </button>
+
+                <button type="button"
+                        onclick="selectTable(2)">
+                    میز ۲
+                </button>
+
+                <button type="button"
+                        onclick="selectTable(3)">
+                    میز ۳
+                </button>
+
+                <button type="button"
+                        onclick="selectTable(4)">
+                    میز ۴
+                </button>
+
+                <button type="button"
+                        onclick="selectTable(5)">
+                    میز ۵
+                </button>
+
+                <button type="button"
+                        onclick="selectTable(6)">
+                    میز ۶
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="current-table">
+
+        <span>
+            میز
+        </span>
+
+        <strong>
+            @ViewBag.TableNumber
+        </strong>
+
+    </div>
+}
 
 <div id="cart-modal"
      class="cart-modal">
@@ -210,3 +281,56 @@
     </div>
 
 </div>
+
+                @section Scripts{
+    <script>
+
+        let selectedTable =
+            @ViewBag.TableNumber;
+
+
+        function selectTable(tableNumber)
+        {
+            selectedTable = tableNumber;
+
+
+            document
+                .querySelectorAll(
+                    ".table-selection button"
+                )
+                .forEach(button =>
+                {
+                    button.classList.remove(
+                        "selected"
+                    );
+                });
+
+
+            event.target.classList.add(
+                "selected"
+            );
+
+
+            // نمایش میز انتخاب شده
+
+            const tableDisplay =
+                document.getElementById(
+                    "selected-table"
+                );
+
+
+            if (tableDisplay)
+            {
+                tableDisplay.innerText =
+                    `میز ${tableNumber}`;
+            }
+        }
+
+
+        function getTableNumber()
+        {
+            return selectedTable;
+        }
+
+    </script>
+                }
