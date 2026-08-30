@@ -1,6 +1,9 @@
 ﻿let cart = [];
 
 
+// ================================
+// ADD TO CART
+// ================================
 function addToCart(id, name, price) {
 
     const existing = cart.find(x => x.id === id);
@@ -20,30 +23,105 @@ function addToCart(id, name, price) {
 
     }
 
+    saveCart();
     updateCart();
-
 }
 
 
+// ================================
+// INCREASE QUANTITY
+// ================================
+function increaseQuantity(id) {
+
+    const item = cart.find(x => x.id === id);
+
+    if (!item)
+        return;
+
+    item.quantity++;
+
+    saveCart();
+    updateCart();
+}
+
+
+// ================================
+// DECREASE QUANTITY
+// ================================
+function decreaseQuantity(id) {
+
+    const item = cart.find(x => x.id === id);
+
+    if (!item)
+        return;
+
+    item.quantity--;
+
+    if (item.quantity <= 0) {
+
+        cart = cart.filter(x => x.id !== id);
+
+    }
+
+    saveCart();
+    updateCart();
+}
+
+
+// ================================
+// REMOVE ITEM
+// ================================
+function removeFromCart(id) {
+
+    cart = cart.filter(x => x.id !== id);
+
+    saveCart();
+    updateCart();
+}
+
+
+// ================================
+// UPDATE CART UI
+// ================================
 function updateCart() {
 
-    const count =
-        cart.reduce(
-            (sum, item) => sum + item.quantity,
-            0
-        );
+    const count = cart.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+    );
 
-    document.getElementById("cart-count")
-        .innerText = count;
+
+    const cartCount =
+        document.getElementById("cart-count");
+
+    if (cartCount) {
+
+        cartCount.innerText = count;
+
+    }
 
 
     const container =
         document.getElementById("cart-items");
 
+    if (!container)
+        return;
+
+
     container.innerHTML = "";
 
-
     let total = 0;
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-cart">
+                سبد خرید خالی است
+            </div>
+        `;
+
+    }
 
 
     cart.forEach(item => {
@@ -58,21 +136,59 @@ function updateCart() {
 
             <div class="cart-item">
 
-                <div>
+                <div class="cart-item-info">
+
                     <strong>
                         ${item.name}
                     </strong>
 
-                    <div>
-                        ${item.quantity} ×
+                    <div class="cart-price">
                         ${item.price.toLocaleString()}
+                        تومان
                     </div>
+
                 </div>
 
-                <strong>
+
+                <div class="cart-item-actions">
+
+                    <button
+                        type="button"
+                        onclick="increaseQuantity(${item.id})">
+                        +
+                    </button>
+
+
+                    <span>
+                        ${item.quantity}
+                    </span>
+
+
+                    <button
+                        type="button"
+                        onclick="decreaseQuantity(${item.id})">
+                        −
+                    </button>
+
+                </div>
+
+
+                <div class="cart-item-total">
+
                     ${itemTotal.toLocaleString()}
                     تومان
-                </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="remove-item"
+                    onclick="removeFromCart(${item.id})">
+
+                    ×
+
+                </button>
 
             </div>
 
@@ -81,12 +197,22 @@ function updateCart() {
     });
 
 
-    document.getElementById("cart-total")
-        .innerText =
-        total.toLocaleString() + " تومان";
+    const totalElement =
+        document.getElementById("cart-total");
+
+
+    if (totalElement) {
+
+        totalElement.innerText =
+            total.toLocaleString() + " تومان";
+
+    }
 }
 
 
+// ================================
+// OPEN CART
+// ================================
 function openCart() {
 
     document
@@ -96,6 +222,9 @@ function openCart() {
 }
 
 
+// ================================
+// CLOSE CART
+// ================================
 function closeCart() {
 
     document
@@ -105,138 +234,217 @@ function closeCart() {
 }
 
 
-// function checkout() {
+// ================================
+// SAVE CART
+// ================================
+function saveCart() {
 
-//     if (cart.length === 0) {
+    localStorage.setItem(
+        "cafeCart",
+        JSON.stringify(cart)
+    );
 
-//         alert("سبد خرید خالی است");
-
-//         return;
-//     }
-
-//     const table =
-//         new URLSearchParams(
-//             window.location.search
-//         ).get("table");
-
-//     if (!table) {
-
-//         alert("شماره میز مشخص نیست");
-
-//         return;
-//     }
+}
 
 
-//     fetch("/Order/Create", {
+// ================================
+// LOAD CART
+// ================================
+function loadCart() {
 
-//         method: "POST",
+    const savedCart =
+        localStorage.getItem("cafeCart");
 
-//         headers: {
-//             "Content-Type":
-//                 "application/json"
-//         },
 
-//         body: JSON.stringify({
+    if (savedCart) {
 
-//             tableNumber: parseInt(table),
+        try {
 
-//             items: cart.map(x => ({
+            cart = JSON.parse(savedCart);
 
-//                 productId: x.id,
+        } catch {
 
-//                 quantity: x.quantity
+            cart = [];
 
-//             }))
+        }
 
-//         })
+    }
 
-//     })
-//         .then(response => {
 
-//             if (!response.ok)
-//                 throw new Error();
+    updateCart();
+}
 
-//             return response.json();
 
-//         })
-//         .then(data => {
+// ================================
+// GET TABLE NUMBER
+// ================================
+function getTableNumber() {
 
-//             alert(
-//                 "سفارش شما با موفقیت ثبت شد.\n" +
-//                 "شماره سفارش: " +
-//                 data.orderId
-//             );
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-//             cart = [];
+    const table =
+        params.get("table");
 
-//             updateCart();
 
-//             closeCart();
+    if (!table)
+        return null;
 
-//         })
-//         .catch(() => {
 
-//             alert(
-//                 "ثبت سفارش با خطا مواجه شد."
-//             );
+    const tableNumber =
+        parseInt(table);
 
-//         });
 
-// }
+    if (
+        isNaN(tableNumber) ||
+        tableNumber <= 0
+    ) {
 
+        return null;
+
+    }
+
+
+    return tableNumber;
+}
+
+
+// ================================
+// SUBMIT ORDER
+// ================================
 async function submitOrder() {
-    if (!selectedTable ||
-        selectedTable <= 0) {
+
+    if (cart.length === 0) {
+
+        alert("سبد خرید خالی است");
+
+        return;
+
+    }
+
+
+    const tableNumber =
+        getTableNumber();
+
+
+    if (!tableNumber) {
+
         alert(
-            "لطفاً ابتدا شماره میز را انتخاب کنید."
+            "شماره میز مشخص نیست."
         );
 
         return;
+
     }
 
 
     const orderItems =
         cart.map(item => ({
+
             productId: item.id,
+
             quantity: item.quantity
+
         }));
 
 
-    const response =
-        await fetch(
-            "/Order/Create",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const response =
+            await fetch(
+                "/Order/Create",
+                {
 
-                body: JSON.stringify({
+                    method: "POST",
 
-                    tableNumber:
-                        selectedTable,
+                    headers: {
 
-                    items:
-                        orderItems
+                        "Content-Type":
+                            "application/json"
 
-                })
-            }
-        );
+                    },
+
+                    body: JSON.stringify({
+
+                        tableNumber:
+                            tableNumber,
+
+                        items:
+                            orderItems
+
+                    })
+
+                }
+            );
 
 
-    const result =
-        await response.json();
+        if (!response.ok) {
+
+            throw new Error(
+                "Request failed"
+            );
+
+        }
 
 
-    if (result.success) {
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            alert(
+                result.message ||
+                "ثبت سفارش انجام نشد."
+            );
+
+            return;
+
+        }
+
+
         alert(
             `سفارش شما با شماره #${result.orderId} ثبت شد.`
         );
 
+
+        // Clear cart
+
         cart = [];
 
-        renderCart();
+        localStorage.removeItem(
+            "cafeCart"
+        );
+
+
+        updateCart();
+
+        closeCart();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "در ثبت سفارش خطایی رخ داد."
+        );
+
     }
+
 }
+
+
+// ================================
+// INITIALIZE
+// ================================
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadCart();
+
+    }
+);
