@@ -1,0 +1,501 @@
+﻿@{
+    ViewData["Title"] = "پنل سفارشات";
+}
+
+<div class="pos-page">
+
+    <header class="pos-header">
+
+        <div>
+            <div class="pos-logo">
+                ☕ کافه فرهان
+            </div>
+
+            <span>
+                پنل مدیریت سفارشات
+            </span>
+        </div>
+
+        <div class="pos-clock"
+             id="current-time">
+        </div>
+
+    </header>
+
+
+    <div class="pos-toolbar">
+
+        <button class="filter active"
+                data-status="all">
+            همه
+        </button>
+
+        <button class="filter"
+                data-status="0">
+            جدید
+        </button>
+
+        <button class="filter"
+                data-status="1">
+            در حال آماده‌سازی
+        </button>
+
+        <button class="filter"
+                data-status="2">
+            آماده
+        </button>
+
+        <button class="filter"
+                data-status="3">
+            تکمیل شده
+        </button>
+
+    </div>
+
+
+    <main>
+
+        <div id="orders-container"
+             class="orders-grid">
+        </div>
+
+    </main>
+
+</div>
+
+
+<div id="toast"
+     class="toast">
+
+    سفارش جدید دریافت شد 🔔
+
+</div>
+
+
+<script>
+
+    let currentFilter = "all";
+
+    let previousOrders = [];
+
+
+    const statusNames = {
+
+        0: "جدید",
+
+        1: "در حال آماده‌سازی",
+
+        2: "آماده",
+
+        3: "تکمیل شده",
+
+        4: "لغو شده"
+
+    };
+
+
+    function loadOrders() {
+
+        fetch("/Admin/GetOrders")
+
+            .then(response => response.json())
+
+            .then(orders => {
+
+                checkNewOrders(orders);
+
+                previousOrders = orders;
+
+                renderOrders(orders);
+
+            });
+
+    }
+
+
+    function checkNewOrders(orders) {
+
+        if (previousOrders.length === 0)
+            return;
+
+        const newOrders =
+            orders.filter(order =>
+                !previousOrders.some(
+                    old => old.id === order.id
+                )
+            );
+
+
+        if (newOrders.length > 0) {
+
+            showToast();
+
+            playNotification();
+
+        }
+
+    }
+
+
+    function renderOrders(orders) {
+
+        const container =
+            document.getElementById(
+                "orders-container"
+            );
+
+
+        let filtered = orders;
+
+
+        if (currentFilter !== "all") {
+
+            filtered =
+                orders.filter(
+                    x =>
+                        x.status ==
+                        parseInt(currentFilter)
+                );
+
+        }
+
+
+        if (filtered.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-orders">
+
+                    ☕
+
+                    <h2>
+                        سفارشی وجود ندارد
+                    </h2>
+
+                    <p>
+                        منتظر سفارش جدید باشید
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            filtered.map(order =>
+                createOrderCard(order)
+            ).join("");
+
+    }
+
+
+    function createOrderCard(order) {
+
+        const items =
+            order.items.map(item => `
+
+                <div class="order-item">
+
+                    <span>
+                        ${item.productName}
+                    </span>
+
+                    <strong>
+                        × ${item.quantity}
+                    </strong>
+
+                </div>
+
+            `).join("");
+
+
+        return `
+
+            <article class="order-card status-${order.status}">
+
+                <div class="order-card-header">
+
+                    <div>
+
+                        <span class="order-number">
+
+                            سفارش #${order.id}
+
+                        </span>
+
+                        <h2>
+
+                            میز ${order.tableNumber}
+
+                        </h2>
+
+                    </div>
+
+                    <span class="status-badge">
+
+                        ${statusNames[order.status]}
+
+                    </span>
+
+                </div>
+
+
+                <div class="order-time">
+
+                    ${formatDate(order.createdAt)}
+
+                </div>
+
+
+                <div class="order-items">
+
+                    ${items}
+
+                </div>
+
+
+                <div class="order-total">
+
+                    <span>
+                        مبلغ کل
+                    </span>
+
+                    <strong>
+
+                        ${Number(
+                            order.totalPrice
+                        ).toLocaleString("fa-IR")}
+
+                        تومان
+
+                    </strong>
+
+                </div>
+
+
+                <div class="order-actions">
+
+                    ${getActions(order)}
+
+                    <button
+                        class="print-btn"
+                        onclick="printOrder(${order.id})">
+
+                        🖨 چاپ
+
+                    </button>
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
+
+
+    function getActions(order) {
+
+        if (order.status === 0) {
+
+            return `
+
+                <button
+                    onclick="changeStatus(
+                        ${order.id},
+                        1
+                    )">
+
+                    👨‍🍳 شروع آماده‌سازی
+
+                </button>
+
+            `;
+
+        }
+
+
+        if (order.status === 1) {
+
+            return `
+
+                <button
+                    onclick="changeStatus(
+                        ${order.id},
+                        2
+                    )">
+
+                    ✅ آماده شد
+
+                </button>
+
+            `;
+
+        }
+
+
+        if (order.status === 2) {
+
+            return `
+
+                <button
+                    onclick="changeStatus(
+                        ${order.id},
+                        3
+                    )">
+
+                    ✓ تحویل شد
+
+                </button>
+
+            `;
+
+        }
+
+
+        return "";
+
+    }
+
+
+    function changeStatus(id, status) {
+
+        const formData =
+            new URLSearchParams();
+
+        formData.append("id", id);
+
+        formData.append("status", status);
+
+
+        fetch("/Admin/ChangeStatus", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded"
+
+            },
+
+            body: formData
+
+        })
+        .then(() => {
+
+            loadOrders();
+
+        });
+
+    }
+
+
+    function formatDate(date) {
+
+        return new Date(date)
+            .toLocaleTimeString(
+                "fa-IR",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+    }
+
+
+    function showToast() {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 4000);
+
+    }
+
+
+    function playNotification() {
+
+        const audio =
+            new Audio(
+                "/sounds/notification.mp3"
+            );
+
+        audio.play()
+            .catch(() => {});
+
+    }
+
+
+    function printOrder(id) {
+
+        window.open(
+            `/Admin/PrintOrder/${id}`,
+            "_blank"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".filter"
+                        )
+                        .forEach(x =>
+                            x.classList.remove(
+                                "active"
+                            )
+                        );
+
+                    this.classList.add("active");
+
+                    currentFilter =
+                        this.dataset.status;
+
+                    loadOrders();
+
+                }
+            );
+
+        });
+
+
+    setInterval(
+        loadOrders,
+        3000
+    );
+
+
+    setInterval(() => {
+
+        document.getElementById(
+            "current-time"
+        ).innerText =
+            new Date().toLocaleTimeString(
+                "fa-IR"
+            );
+
+    }, 1000);
+
+
+    loadOrders();
+
+</script>

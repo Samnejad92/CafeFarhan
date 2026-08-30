@@ -1,0 +1,212 @@
+﻿@model List<CafeFarhan.Models.Category>
+
+@{
+    ViewData["Title"] = "منوی کافه فرهان";
+}
+
+<div class="cafe-menu">
+
+    <header class="menu-header">
+
+        <div class="brand-icon">
+            ☕
+        </div>
+
+        <h1>کافه فرهان</h1>
+
+        <p>طعم خوب، حال خوب</p>
+
+        @if (ViewBag.TableNumber > 0)
+        {
+            <div class="table-badge">
+                میز @ViewBag.TableNumber
+            </div>
+        }
+
+    </header>
+
+
+    <div class="category-nav">
+
+        @foreach (var category in Model)
+        {
+            <a href="#category-@category.Id">
+                @category.Name
+            </a>
+        }
+
+    </div>
+
+
+    <main class="products-container">
+
+        @foreach (var category in Model)
+        {
+            <section class="product-category"
+                     id="category-@category.Id">
+
+                <h2>
+                    @category.Name
+                </h2>
+
+                <div class="products-grid">
+
+                    @foreach (var product in category.Products
+                        .Where(x => x.IsAvailable))
+                    {
+                        <article class="product-card">
+
+                            <div class="product-image">
+
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl"
+                                         alt="@product.Name"
+                                         loading="lazy">
+                                }
+                                else
+                                {
+                                    <div class="no-image">
+                                        ☕
+                                    </div>
+                                }
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <h3>
+                                    @product.Name
+                                </h3>
+
+
+                                @if (!string.IsNullOrWhiteSpace(product.Description))
+                                {
+                                    <p class="product-description">
+                                        @product.Description
+                                    </p>
+                                }
+
+
+                                @if (!string.IsNullOrWhiteSpace(product.Ingredients))
+                                {
+                                    <div class="ingredients">
+
+                                        <span class="ingredients-title">
+                                            ترکیبات
+                                        </span>
+
+
+                                        <div class="ingredient-list">
+
+                                            @foreach (var ingredient
+                                                in product.Ingredients
+                                                    .Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                            {
+                                                <span class="ingredient-tag">
+
+                                                    @ingredient.Trim()
+
+                                                </span>
+                                            }
+
+                                        </div>
+
+                                    </div>
+                                }
+
+
+                                <div class="product-bottom">
+
+                                    <strong class="product-price">
+
+                                        @product.Price.ToString("N0")
+                                        تومان
+
+                                    </strong>
+
+
+                                    <button type="button"
+                                            class="add-product"
+                                            onclick="addToCart(
+                                        @product.Id,
+                                        '@product.Name',
+                                        @product.Price
+                                        )">
+
+                                        +
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+                    }
+
+                </div>
+
+            </section>
+        }
+
+    </main>
+
+
+    <button class="cart-button"
+            onclick="openCart()">
+
+        🛒
+
+        <span>
+            سبد خرید
+        </span>
+
+        <b id="cart-count">0</b>
+
+    </button>
+
+</div>
+
+
+<div id="cart-modal"
+     class="cart-modal">
+
+    <div class="cart-box">
+
+        <button class="close-cart"
+                onclick="closeCart()">
+
+            ×
+
+        </button>
+
+        <h2>
+            سبد خرید
+        </h2>
+
+        <div id="cart-items"></div>
+
+        <div class="cart-total">
+
+            <span>
+                مجموع
+            </span>
+
+            <strong id="cart-total">
+                0 تومان
+            </strong>
+
+        </div>
+
+        <button class="checkout-button"
+                onclick="checkout()">
+
+            ثبت سفارش
+
+        </button>
+
+    </div>
+
+</div>
