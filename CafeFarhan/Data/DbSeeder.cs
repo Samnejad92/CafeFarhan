@@ -35,15 +35,15 @@ namespace CafeFarhan.Data
                 DisplayOrder = 4
             };
 
-            var desserts = new Category
+            var shake = new Category
             {
-                Name = "دسر و کیک",
+                Name = "شیک ها",
                 DisplayOrder = 5
             };
 
-            var breakfast = new Category
+            var smoke = new Category
             {
-                Name = "صبحانه",
+                Name = "قلیان",
                 DisplayOrder = 6
             };
 
@@ -52,22 +52,23 @@ namespace CafeFarhan.Data
                 burger,
                 hotDrinks,
                 coldDrinks,
-                desserts,
-                breakfast
+                shake,
+                smoke
             );
 
             context.SaveChanges();
 
             var products = new List<Product>
             {
+                #region fastfoods
                 // fastfoods
                 new Product
                 {
                     Name = "پیتزا میتی مخصوص",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ ژامبودن ",
+                        "قارچ ,ژامبودن ",
                     Price = 270000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -78,9 +79,9 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا مینی مرغ",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ مرغ ",
+                        "قارچ ,مرغ ",
                     Price = 365000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -91,9 +92,9 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا مینی رست بیف",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ مرغ ",
+                        "قارچ ,گوشت ",
                     Price = 400000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -104,7 +105,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا مخصوص",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 450000,
@@ -117,7 +118,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا قارچ و مرغ",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 500000,
@@ -130,7 +131,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا سبزیجات",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 400000,
@@ -143,7 +144,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا رست بیف",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 630000,
@@ -156,7 +157,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا سراشپز",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 590000,
@@ -169,9 +170,9 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا پپرونی",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ  ",
+                        "پپرونی  ",
                     Price = 480000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -182,7 +183,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا خانواده مخصوص",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 790000,
@@ -195,9 +196,9 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا مرغ خانواده",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ  ",
+                        "مرغ  ",
                     Price = 900000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -208,9 +209,9 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا رست بیف خانواده",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ  ",
+                        "گوشت  ",
                     Price = 1200000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
@@ -221,7 +222,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا سراشپز خانواده",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
                         "قارچ  ",
                     Price = 990000,
@@ -234,23 +235,95 @@ namespace CafeFarhan.Data
                 {
                     Name = "پیتزا خانواده پپرونی",
                     Description =
-                        "پیتزا",
+                        "",
                     Ingredients =
-                        "قارچ  ",
+                        "پپرونی  ",
                     Price = 810000,
                     ImageUrl =
                         "/images/products/pizza.jpg",
                     CategoryId = fastfood.Id,
                     IsAvailable = true
                 },
-                // coffe
+                #endregion
+
+                #region burgers
+                // burgers
+                new Product
+                {
+                    Name = "بمب برگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 810000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "همبرگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 810000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "چیز برگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 810000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "دوبل برگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 810000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "رویال برگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 90000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                #endregion
+
+                #region hot drinks
+                // hot drinks
                 new Product
                 {
                     Name = "اسپرسو",
                     Description =
-                        "یک شات اسپرسوی تازه و خوش‌عطر",
+                        "",
                     Ingredients =
-                        "قهوه اسپرسو",
+                        "قهوه ",
                     Price = 85000,
                     ImageUrl =
                         "/images/products/espresso.jpg",
@@ -261,7 +334,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "امریکانو",
                     Description =
-                        "یک فنجان",
+                        "",
                     Ingredients =
                         "قهوه",
                     Price = 140000,
@@ -274,7 +347,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "کاپوچینو",
                     Description =
-                        "قهوه‌ای خوش‌عطر با بافتی نرم و خامه‌ای",
+                        "",
                     Ingredients =
                         "اسپرسو, شیر, فوم شیر",
                     Price = 95000,
@@ -286,7 +359,9 @@ namespace CafeFarhan.Data
                 new Product
                 {
                     Name = "کافه لاته",
-                    Description = "اسپرسو با شیر گرم و فوم نرم",
+                    Description = "",
+                    Ingredients =
+                        "اسپرسو, شیر, فوم شیر",
                     Price = 160000,
                     ImageUrl =
                         "/images/products/espresso.jpg",
@@ -297,7 +372,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "موکا",
                     Description =
-                        "یک فنجان",
+                        "",
                     Ingredients =
                         "قهوه",
                     Price = 190000,
@@ -310,7 +385,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "ماکیاتو",
                     Description =
-                        "یک فنجان",
+                        "",
                     Ingredients =
                         "قهوه",
                     Price = 200000,
@@ -323,7 +398,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "چای",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "چای",
                     Price = 85000,
@@ -336,7 +411,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "چای سبز",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "چای",
                     Price = 100000,
@@ -349,7 +424,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "چای ماسالا",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "چای ماسالا",
                     Price = 130000,
@@ -362,7 +437,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "چای کرک",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "چای کرک",
                     Price = 170000,
@@ -375,7 +450,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "دمنوش به لیمو",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "دمنوش",
                     Price = 60000,
@@ -388,7 +463,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "دمنوش گل گاوزبان",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "دمنوش",
                     Price = 60000,
@@ -401,7 +476,7 @@ namespace CafeFarhan.Data
                 {
                     Name = "دمنوش بابونه",
                     Description =
-                        "یک ",
+                        "",
                     Ingredients =
                         "دمنوش",
                     Price = 170000,
@@ -410,91 +485,469 @@ namespace CafeFarhan.Data
                     CategoryId = hotDrinks.Id,
                     IsAvailable = true
                 },
+                #endregion
 
-                                new Product
+                #region cold drinks
+                new Product
                 {
-                    Name = "کاپوچینو",
-
-                    Description =
-                        "قهوه‌ای خوش‌عطر با بافتی نرم و خامه‌ای",
-
+                    Name = "ایلتوبریز(مخصوص فرهان)",
+                    Description = "",
                     Ingredients =
-                        "اسپرسو, شیر, فوم شیر",
-
-                    Price = 120000,
-
-                    ImageUrl =
-                        "/images/products/cappuccino.jpg",
-
-                    CategoryId = hotDrinks.Id,
-
-                    IsAvailable = true
-                },
-
-                new Product
-                {
-                    Name = "کافه لاته",
-                    Description = "اسپرسو با شیر گرم و فوم نرم",
-                    Price = 125000,
-                    CategoryId = hotDrinks.Id,
-                    IsAvailable = true
-                },
-
-                new Product
-                {
-                    Name = "آیس کافی",
-                    Description = "قهوه سرد با یخ",
-                    Price = 135000,
+                        "مخصوص",
+                    Price = 310000,
                     CategoryId = coldDrinks.Id,
                     IsAvailable = true
                 },
-
                 new Product
                 {
                     Name = "موهیتو",
-                    Description = "نوشیدنی خنک با نعناع و لیمو",
-                    Price = 140000,
+                    Description = "",
+                    Ingredients =
+                        "موهیتو",
+                    Price = 175000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "ایس تی هلو",
+                    Description = "",
+                    Ingredients =
+                        "ایس تی هلو",
+                    Price = 110000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "بلادی",
+                    Description = "",
+                    Ingredients =
+                        "بلادی",
+                    Price = 240000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "دراگون",
+                    Description = "",
+                    Ingredients =
+                        "دراگون",
+                    Price = 200000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "دتاکس سودا",
+                    Description = "",
+                    Ingredients =
+                        "دتاکس",
+                    Price = 120000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "معجون ترش",
+                    Description = "",
+                    Ingredients =
+                        "معجون ترش",
+                    Price = 260000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "استوایی در بم",
+                    Description = "",
+                    Ingredients =
+                        "استوایی ",
+                    Price = 260000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "کوکو در بم",
+                    Description = "",
+                    Ingredients =
+                        "کوکو ",
+                    Price = 175000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "سامرتایم",
+                    Description = "",
+                    Ingredients =
+                        "سامر",
+                    Price = 280000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "شاتوت البالو",
+                    Description = "",
+                    Ingredients =
+                        "شاتوت ,البالو",
+                    Price = 195000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "آفوکانو",
+                    Description = "",
+                    Ingredients =
+                        "آفوکانو",
+                    Price = 120000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "آیس لاته",
+                    Description = "",
+                    Ingredients =
+                        "آیس لاته",
+                    Price = 190000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "آیس امریکانو",
+                    Description = "",
+                    Ingredients =
+                        "امریکانو",
+                    Price = 150000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "آیس موکا",
+                    Description = "",
+                    Ingredients =
+                        "آیس موکا",
+                    Price = 230000,
+                    CategoryId = coldDrinks.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "آیس ماکیاتو",
+                    Description = "",
+                    Ingredients =
+                        "آیس ماکیاتو",
+                    Price = 260000,
                     CategoryId = coldDrinks.Id,
                     IsAvailable = true
                 },
 
-                                new Product
+                #endregion
+
+                #region shakes
+                new Product
                 {
-                    Name = "چیزکیک",
-
+                    Name = "شیک شکلات",
                     Description =
-                        "چیزکیک مخصوص کافه فرهان",
-
+                        "",
                     Ingredients =
-                        "پنیر خامه‌ای, بیسکویت, خامه, شکر",
-
-                    Price = 150000,
-
+                        "شکلات",
+                    Price = 220000,
                     ImageUrl =
                         "/images/products/cheesecake.jpg",
-
-                    CategoryId = desserts.Id,
-
+                    CategoryId = shake.Id,
                     IsAvailable = true
                 },
 
                 new Product
                 {
-                    Name = "کیک شکلاتی",
-                    Description = "کیک شکلاتی تازه",
-                    Price = 130000,
-                    CategoryId = desserts.Id,
+                    Name = "شیک موز شکلات",
+                    Description = "",
+                    Ingredients =
+                        "موز,شکلات",
+                    Price = 280000,
+                    CategoryId = shake.Id,
                     IsAvailable = true
                 },
-
                 new Product
                 {
-                    Name = "صبحانه مخصوص",
-                    Description = "صبحانه کامل کافه فرهان",
+                    Name = "شیک توت فرنگی",
+                    Description = "",
+                    Ingredients =
+                        "توت فرنگی",
+                    Price = 220000,
+                    CategoryId = shake.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "شیک بادام زمینی",
+                    Description = "",
+                    Ingredients =
+                        "بادام زمینی,",
+                    Price = 300000,
+                    CategoryId = shake.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "شیک موز ",
+                    Description = "",
+                    Ingredients =
+                        "موز,",
+                    Price = 240000,
+                    CategoryId = shake.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "شیک لوتوس",
+                    Description = "",
+                    Ingredients =
+                        "شیک",
+                    Price = 300000,
+                    CategoryId = shake.Id,
+                    IsAvailable = true
+                },
+                #endregion
+
+                #region smokes
+                new Product
+                {
+                    Name = "قلیان نعنا",
+                    Description = "",
+                    Ingredients =
+                        "نعنا",
                     Price = 250000,
-                    CategoryId = breakfast.Id,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
                     IsAvailable = true
-                }
+                },
+                new Product
+                {
+                    Name = "قلیان نعنا ادامس",
+                    Description = "",
+                    Ingredients =
+                        "نعنا ادامس",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان نعنا لیمو",
+                    Description = "",
+                    Ingredients =
+                        "نعنا لیمو",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "نعنا یخقلیان ",
+                    Description = "",
+                    Ingredients =
+                        "نعنا یخ",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان نعنا پرتقال",
+                    Description = "",
+                    Ingredients =
+                        "نعنا پرتقال",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان پرتقال",
+                    Description = "",
+                    Ingredients =
+                        "پرتقال",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان پرتقال خامه",
+                    Description = "",
+                    Ingredients =
+                        "پرتقال خامه",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان شلیل",
+                    Description = "",
+                    Ingredients =
+                        "شلیل",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان شلیل البالو",
+                    Description = "",
+                    Ingredients =
+                        "شلیل البالو",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان دوسیب",
+                    Description = "",
+                    Ingredients =
+                        "دوسیب",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "دوسیب البالوقلیان ",
+                    Description = "",
+                    Ingredients =
+                        "دوسیب البالو",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان لاو",
+                    Description = "",
+                    Ingredients =
+                        "لاو",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "شب های مسکوقلیان ",
+                    Description = "",
+                    Ingredients =
+                        "شب های مسکو",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان بلوبری",
+                    Description = "",
+                    Ingredients =
+                        "بلوبری",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان یخ شراب",
+                    Description = "",
+                    Ingredients =
+                        "یخ شراب",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "انارقلیان ",
+                    Description = "",
+                    Ingredients =
+                        "انار",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان انبه",
+                    Description = "",
+                    Ingredients =
+                        "انبه",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "قلیان لبمو ترش",
+                    Description = "",
+                    Ingredients =
+                        "لیموترش",
+                    Price = 250000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "تعویض سر قلیان",
+                    Description = "",
+                    Ingredients =
+                        "تعویض سر",
+                    Price = 100000,
+                    ImageUrl =
+                        "/images/smokes/قلیان.jpg",
+                    CategoryId = smoke.Id,
+                    IsAvailable = true
+                },
+                #endregion
             };
 
             context.Products.AddRange(products);
