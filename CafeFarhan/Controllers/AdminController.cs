@@ -218,5 +218,35 @@ namespace CafeFarhan.Controllers
             return RedirectToAction(nameof(Categories));
         }
 
+        [HttpGet("AddProduct")]
+        public async Task<IActionResult> AddProduct()
+        {
+            ViewBag.Categories = await _context.Categories
+                .OrderBy(c => c.DisplayOrder)
+                .ToListAsync();
+
+            return View();
+        }
+
+        [HttpPost("AddProduct")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddProduct(Product model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = await _context.Categories
+                    .OrderBy(c => c.DisplayOrder)
+                    .ToListAsync();
+
+                return View(model);
+            }
+
+            _context.Products.Add(model);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Products));
+        }
+
     }
 }

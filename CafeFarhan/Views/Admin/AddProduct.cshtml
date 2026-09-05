@@ -1,0 +1,308 @@
+﻿@model CafeFarhan.Models.Product
+
+@{
+    ViewData["Title"] = "افزودن محصول";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <style>
+
+            body {
+                font-family: Tahoma, Arial, sans-serif;
+                background: #f5f5f5;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 700px;
+                margin: 40px auto;
+            }
+
+            .card {
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 3px 20px rgba(0,0,0,.08);
+            }
+
+            h1 {
+                margin-top: 0;
+                margin-bottom: 25px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            input,
+            textarea,
+            select {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-family: inherit;
+                font-size: 15px;
+                background: white;
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 100px;
+            }
+
+                input:focus,
+                textarea:focus,
+                select:focus {
+                    outline: none;
+                    border-color: #0d6efd;
+                }
+
+            .buttons {
+                display: flex;
+                gap: 10px;
+                margin-top: 30px;
+            }
+
+            .btn {
+                border: none;
+                padding: 12px 25px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-family: inherit;
+                font-size: 15px;
+                text-decoration: none;
+            }
+
+            .save-btn {
+                background: #198754;
+                color: white;
+            }
+
+                .save-btn:hover {
+                    background: #157347;
+                }
+
+            .back-btn {
+                background: #6c757d;
+                color: white;
+            }
+
+                .back-btn:hover {
+                    background: #5c636a;
+                }
+
+            .validation {
+                color: #dc3545;
+                margin-bottom: 15px;
+            }
+
+            .checkbox-group {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .checkbox-group input {
+                    width: auto;
+                }
+
+                .checkbox-group label {
+                    margin: 0;
+                }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>
+                افزودن محصول
+            </h1>
+
+            <form method="post"
+                  action="/Admin/AddProduct">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="All"
+                     class="validation">
+                </div>
+
+
+                <!-- نام محصول -->
+                <div class="form-group">
+
+                    <label asp-for="Name">
+                        نام محصول
+                    </label>
+
+                    <input asp-for="Name"
+                           placeholder="مثلاً کاپوچینو" />
+
+                    <span asp-validation-for="Name"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- دسته بندی -->
+                <div class="form-group">
+
+                    <label asp-for="CategoryId">
+                        دسته‌بندی
+                    </label>
+
+                    <select asp-for="CategoryId">
+
+                        <option value="">
+                            -- انتخاب دسته‌بندی --
+                        </option>
+
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.Id">
+                                @category.Name
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="CategoryId"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- توضیحات -->
+                <div class="form-group">
+
+                    <label asp-for="Description">
+                        توضیحات
+                    </label>
+
+                    <textarea asp-for="Description"
+                              placeholder="توضیحات محصول را وارد کنید..."></textarea>
+
+                    <span asp-validation-for="Description"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- مواد تشکیل دهنده -->
+                <div class="form-group">
+
+                    <label asp-for="Ingredients">
+                        مواد تشکیل‌دهنده
+                    </label>
+
+                    <textarea asp-for="Ingredients"
+                              placeholder="مثلاً اسپرسو، شیر، شکلات..."></textarea>
+
+                    <span asp-validation-for="Ingredients"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- قیمت -->
+                <div class="form-group">
+
+                    <label asp-for="Price">
+                        قیمت
+                    </label>
+
+                    <input asp-for="Price"
+                           type="number"
+                           step="0.01"
+                           min="0"
+                           placeholder="مثلاً 150000" />
+
+                    <span asp-validation-for="Price"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- تصویر -->
+                <div class="form-group">
+
+                    <label asp-for="ImageUrl">
+                        آدرس تصویر
+                    </label>
+
+                    <input asp-for="ImageUrl"
+                           placeholder="https://example.com/image.jpg" />
+
+                    <span asp-validation-for="ImageUrl"
+                          class="validation">
+                    </span>
+
+                </div>
+
+
+                <!-- وضعیت -->
+                <div class="form-group">
+
+                    <div class="checkbox-group">
+
+                        <input asp-for="IsAvailable"
+                               type="checkbox" />
+
+                        <label asp-for="IsAvailable">
+                            محصول موجود و قابل سفارش است
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button type="submit"
+                            class="btn save-btn">
+                        ذخیره محصول
+                    </button>
+
+                    <a href="/Admin/Products"
+                       class="btn back-btn">
+                        بازگشت
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
