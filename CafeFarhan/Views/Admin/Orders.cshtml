@@ -21,13 +21,11 @@
         </div>
 
     </header>
-
-
     <div class="pos-toolbar">
 
         <button class="filter active"
-                data-status="all">
-            همه
+                data-status="active">
+            فعال
         </button>
 
         <button class="filter"
@@ -48,6 +46,11 @@
         <button class="filter"
                 data-status="3">
             تکمیل شده
+        </button>
+
+        <button class="filter"
+                data-status="4">
+            لغو شده
         </button>
 
     </div>
@@ -74,7 +77,7 @@
 
 <script>
 
-    let currentFilter = "all";
+    let currentFilter = "active";
 
     let previousOrders = [];
 
@@ -143,21 +146,27 @@
             document.getElementById(
                 "orders-container"
             );
+                let filtered = orders;
 
+    if (currentFilter === "active") {
 
-        let filtered = orders;
+        filtered = orders.filter(
+            x =>
+                x.status === 0 ||
+                x.status === 1 ||
+                x.status === 2
+        );
 
+    }
+    else if (currentFilter !== "all") {
 
-        if (currentFilter !== "all") {
+        filtered = orders.filter(
+            x =>
+                x.status === parseInt(currentFilter)
+        );
 
-            filtered =
-                orders.filter(
-                    x =>
-                        x.status ==
-                        parseInt(currentFilter)
-                );
+    }
 
-        }
 
 
         if (filtered.length === 0) {
@@ -243,11 +252,10 @@
                 </div>
 
 
-                <div class="order-time">
+                    <div class="order-time">
+                        📅 ${formatDate(order.createdAt)}
+                    </div>
 
-                    ${formatDate(order.createdAt)}
-
-                </div>
 
 
                 <div class="order-items">
@@ -396,16 +404,34 @@
 
     function formatDate(date) {
 
-        return new Date(date)
-            .toLocaleTimeString(
-                "fa-IR",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
+        const d = new Date(date);
 
+        const now = new Date();
+
+        const sameDay =
+            d.getFullYear() === now.getFullYear() &&
+            d.getMonth() === now.getMonth() &&
+            d.getDate() === now.getDate();
+
+        const time = d.toLocaleTimeString("fa-IR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        if (sameDay) {
+            return `امروز - ${time}`;
+        }
+
+        const dateText = d.toLocaleDateString("fa-IR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+
+        return `${dateText} - ${time}`;
     }
+
+
 
 
     function showToast() {

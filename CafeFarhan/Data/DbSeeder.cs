@@ -64,7 +64,7 @@ namespace CafeFarhan.Data
                 // fastfoods
                 new Product
                 {
-                    Name = "پیتزا میتی مخصوص",
+                    Name = "پیتزا مینی مخصوص",
                     Description =
                         "",
                     Ingredients =
@@ -255,7 +255,7 @@ namespace CafeFarhan.Data
                         "",
                     Ingredients =
                         "همبر",
-                    Price = 810000,
+                    Price = 550000,
                     ImageUrl =
                         "/images/burgers/burger.jpg",
                     CategoryId = burger.Id,
@@ -263,12 +263,12 @@ namespace CafeFarhan.Data
                 },
                 new Product
                 {
-                    Name = "همبرگر",
+                    Name = "برگر",
                     Description =
                         "",
                     Ingredients =
                         "همبر",
-                    Price = 810000,
+                    Price = 400000,
                     ImageUrl =
                         "/images/burgers/burger.jpg",
                     CategoryId = burger.Id,
@@ -281,7 +281,7 @@ namespace CafeFarhan.Data
                         "",
                     Ingredients =
                         "همبر",
-                    Price = 810000,
+                    Price = 470000,
                     ImageUrl =
                         "/images/burgers/burger.jpg",
                     CategoryId = burger.Id,
@@ -294,7 +294,20 @@ namespace CafeFarhan.Data
                         "",
                     Ingredients =
                         "همبر",
-                    Price = 810000,
+                    Price = 500000,
+                    ImageUrl =
+                        "/images/burgers/burger.jpg",
+                    CategoryId = burger.Id,
+                    IsAvailable = true
+                },
+                new Product
+                {
+                    Name = "دوبل چیز برگر",
+                    Description =
+                        "",
+                    Ingredients =
+                        "همبر",
+                    Price = 570000,
                     ImageUrl =
                         "/images/burgers/burger.jpg",
                     CategoryId = burger.Id,
@@ -307,7 +320,7 @@ namespace CafeFarhan.Data
                         "",
                     Ingredients =
                         "همبر",
-                    Price = 90000,
+                    Price = 470000,
                     ImageUrl =
                         "/images/burgers/burger.jpg",
                     CategoryId = burger.Id,
@@ -757,7 +770,7 @@ namespace CafeFarhan.Data
                 },
                 new Product
                 {
-                    Name = "نعنا یخقلیان ",
+                    Name = "نعنا یخ قلیان ",
                     Description = "",
                     Ingredients =
                         "نعنا یخ",
